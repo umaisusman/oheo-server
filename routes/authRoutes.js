@@ -147,7 +147,7 @@ if (user.resetTokenExpiry && user.resetTokenExpiry < new Date()) {
     console.log("User after saving:", checkUser); // Debugging
 
     // Send Email
-    const resetLink = `http://localhost:5000/reset-password/${resetToken}`;
+    const resetLink = `https://oheo-server.vercel.app/reset-password/${resetToken}`;
     await sendEmail(email, "Reset Your Password", `<p>Click <a href="${resetLink}">here</a> to reset your password.</p>`);
 
     res.status(200).json({ message: "Reset link sent to your email" });
