@@ -25,6 +25,11 @@ app.use(passport.session());
 // Routes
 app.use("/auth", authRoutes);
 app.use(authRoutes);
+
+// Default Route
+app.get('/', (req, res) => {
+  res.send("Server is running!");
+});
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
