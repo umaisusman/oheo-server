@@ -173,7 +173,7 @@ router.get("/reset-password/:token", async (req, res) => {
   }
 
   // Redirect to the frontend password reset page with the token
-  res.redirect(`http://localhost:5173/Resetpassword/${token}`);
+  res.redirect(`https://oheo-client.vercel.app/Resetpassword/${token}`);
 });
 
 
