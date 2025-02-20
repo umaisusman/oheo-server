@@ -21,6 +21,21 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use((req, res, next) => {
+  if (req.headers["x-forwarded-proto"] !== "https") {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
+app.use((req, res, next) => {
+  res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  next();
+});
+
 
 // Routes
 app.use("/auth", authRoutes);
