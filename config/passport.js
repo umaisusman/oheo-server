@@ -69,7 +69,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      callbackURL: "/auth/facebook/callback",
+      callbackURL: "https://oheo-server.vercel.app/auth/facebook/callback",
       profileFields: ["id", "displayName", "emails"], // Fields you want to retrieve
       scope: ["email", "public_profile"] // Ensure the scope is defined here as well
     },
