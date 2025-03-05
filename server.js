@@ -6,8 +6,14 @@ const session = require("express-session");
 const passport = require("passport");
 require("./config/passport"); // Import Passport Strategies
 const authRoutes = require("./routes/authRoutes");
+const businessRoutes = require("./routes/businessRoutes");
+
+const path = require("path");
+
 
 const app = express();
+
+
 
 // Middleware
 app.use(cors());
@@ -21,30 +27,24 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use((req, res, next) => {
-  if (req.headers["x-forwarded-proto"] !== "https") {
-    return res.redirect(`https://${req.headers.host}${req.url}`);
-  }
-  next();
-});
 
-app.use((req, res, next) => {
-  res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  next();
-});
 
+// app.use("/uploads", express.static("uploads"));
+
+
+// app.use("/uploads", express.static(path.join(__dirname, "../uploads")));
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
 app.use("/auth", authRoutes);
 app.use(authRoutes);
+app.use("/api/business", businessRoutes);
 
-// Default Route
-app.get('/', (req, res) => {
-  res.send("Server is running!");
+app.get("/", (req, res) => {
+  res.send("API is running...");
 });
+
 // Connect to MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
